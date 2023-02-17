@@ -16,8 +16,13 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long orderId;
+    private Long id;
 
-    @ManyToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-    private Collection<Product> products = new ArrayList<>();
+    @Column(name = "total_price")
+    private double totalPrice;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
+
+
 }

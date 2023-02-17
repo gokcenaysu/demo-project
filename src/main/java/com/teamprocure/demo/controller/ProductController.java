@@ -13,7 +13,7 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    private ProductServiceImpl productService;
+    private ProductService productService;
 
     @GetMapping("/findAll")
     public List<Product> findAll(){
@@ -21,8 +21,8 @@ public class ProductController {
     }
 
     @GetMapping("/findByCode")
-    public Product findById(@RequestParam Long productId){
-        return productService.findById(productId);
+    public Product findByCode(@RequestParam Long code){
+        return productService.findByCode(code);
     }
 
     @PostMapping("/add")
@@ -31,8 +31,8 @@ public class ProductController {
     }
 
     @PutMapping("/update/{productId}")
-    public Product update(@PathVariable Long productId, @RequestBody Product product) {
-        product.setProductId(productId);
+    public Product update(@PathVariable Long id, @RequestBody Product product) {
+        product.setId(id);
         return productService.update(product);
     }
 

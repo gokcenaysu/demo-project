@@ -18,23 +18,26 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long productId;
+    private Long id;
+
+    @Column(name = "code")
+    private Long code;
 
     @Column(name="name")
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="category_product",
+    @JoinTable(name="categories_products",
               joinColumns = @JoinColumn(name = "product_id"),
               inverseJoinColumns = @JoinColumn(name = "category_id"))
     @JsonIgnore
     private Collection<Category> categories = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="order_product",
+    @JoinTable(name="order_items_products",
             joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
+            inverseJoinColumns = @JoinColumn(name = "order_item_id"))
     @JsonIgnore
-    private Collection<Order> orders = new ArrayList<>();
+    private Collection<OrderItem> orderItems = new ArrayList<>();
 
 }

@@ -8,8 +8,8 @@ import java.util.List;
 public interface OrderService {
 
     public List<Order> findAll();
-    public Order findById(Long orderId);
+    public Order findById(Long id);
     public Order add(Order order);
-    public Order update(Order order);
-    public void delete(Long id);
+    public Order update(Order order, Long id);
+    public void deleteOrder(Long id);
 }

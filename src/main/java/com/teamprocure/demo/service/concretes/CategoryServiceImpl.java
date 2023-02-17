@@ -30,8 +30,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findById(Long categoryId) {
-        return categoryRepository.findById(categoryId).get();
+    public Category findByCode(Long code) {
+        return categoryRepository.findByCode(code);
     }
 
     @Override
@@ -40,34 +40,49 @@ public class CategoryServiceImpl implements CategoryService {
         newCategory.setName(category.getName());
         newCategory.getProducts()
                 .addAll(category
-                        .getProducts()
-                        .stream()
-                        .map(p -> {
-                            Product product = productService.findById(p.getProductId());
-                            product.getCategories().add(newCategory);
-                            return product;
-                        }).collect(Collectors.toList()));
+                .getProducts()
+                .stream()
+                .map(p -> {
+                    Product product = productService.findById(p.getId());
+                    product.getCategories().add(newCategory);
+                    return product;
+                }).collect(Collectors.toList()));
         return categoryRepository.save(newCategory);
     }
 
     @Override
-    public Category update(Category category) {
-        Category newCategory = new Category();
+    public Category update(Category category, Long id) {
+        Category newCategory = categoryRepository.getReferenceById(id);
         newCategory.setName(category.getName());
-        newCategory.getProducts()
-                .addAll(category
-                        .getProducts()
-                        .stream()
-                        .map(p -> {
-                            Product product = productService.findById(p.getProductId());
-                            product.getCategories().add(newCategory);
-                            return product;
-                        }).collect(Collectors.toList()));
+        category
+                .getProducts()
+                .stream()
+                .map(p -> {
+                    Product product = productService.findById(p.getId());
+                    product.getCategories().add(newCategory);
+                    return product;
+                }).collect(Collectors.toList())
+                .addAll(newCategory.getProducts());
         return categoryRepository.save(newCategory);
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteProductInCategory(Category category, Long id) {
+        Category newCategory = categoryRepository.getReferenceById(id);
+        category
+                .getProducts()
+                .stream()
+                .map(p -> {
+                    Product product = productService.findById(p.getId());
+                    product.getCategories().remove(newCategory);
+                    return product;
+                }).collect(Collectors.toList())
+                .remove(newCategory.getProducts());
+         categoryRepository.save(newCategory);
     }
 }

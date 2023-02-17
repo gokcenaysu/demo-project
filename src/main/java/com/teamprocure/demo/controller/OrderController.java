@@ -2,6 +2,7 @@ package com.teamprocure.demo.controller;
 
 import com.teamprocure.demo.model.Order;
 import com.teamprocure.demo.model.Product;
+import com.teamprocure.demo.service.abstracts.OrderService;
 import com.teamprocure.demo.service.concretes.OrderServiceImpl;
 import com.teamprocure.demo.service.concretes.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    private OrderServiceImpl orderService;
+    private OrderService orderService;
 
     @GetMapping("/findAll")
     public List<Order> findAll(){
@@ -33,12 +34,11 @@ public class OrderController {
 
     @PutMapping("/update/{orderId}")
     public Order update(@PathVariable Long orderId, @RequestBody Order order) {
-        order.setOrderId(orderId);
-        return orderService.update(order);
+        return orderService.update(order, orderId);
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestParam Long id){
-        orderService.delete(id);
+    public void deleteOrder(@RequestParam Long id){
+        orderService.deleteOrder(id);
     }
 }

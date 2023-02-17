@@ -13,36 +13,39 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private CategoryServiceImpl categoryService;
+    private CategoryService categoryService;
 
     public CategoryController(CategoryServiceImpl categoryService) {
         this.categoryService = categoryService;
     }
 
     @GetMapping("/findAll")
-    public List<Category> findAll(){
+    public List<Category> findAll() {
         return categoryService.findAll();
     }
 
     @GetMapping("/findByCode")
-    public Category findById (@RequestParam Long categoryId){
-        return categoryService.findById(categoryId);
+    public Category findByCode(@RequestParam Long code) {
+        return categoryService.findByCode(code);
     }
 
     @PostMapping("/add")
-    public Category add (@RequestBody Category category){
+    public Category add(@RequestBody Category category) {
         return categoryService.add(category);
     }
 
-    @PutMapping("/update")
-    public Category update (@RequestBody Category category){
-        return categoryService.update(category);
+    @PutMapping("/update/{id}")
+    public Category update(@PathVariable Long id, @RequestBody Category category) {
+        return categoryService.update(category, id);
     }
 
     @DeleteMapping("/delete")
-    public void delete (@RequestParam Long id){
-        categoryService.delete(id);
+    public void deleteCategory(@RequestParam Long id) {
+        categoryService.deleteCategory(id);
     }
 
-
+    @DeleteMapping("/delete-product/{id}")
+    public void deleteProductInCategory(@PathVariable Long id, @RequestBody Category category) {
+        categoryService.deleteProductInCategory(category, id);
+    }
 }
