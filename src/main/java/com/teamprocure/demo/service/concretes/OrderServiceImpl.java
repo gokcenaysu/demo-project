@@ -8,11 +8,13 @@ import com.teamprocure.demo.repository.OrderRepository;
 import com.teamprocure.demo.service.abstracts.OrderItemService;
 import com.teamprocure.demo.service.abstracts.OrderService;
 import com.teamprocure.demo.service.abstracts.ProductService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -37,18 +39,19 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order add(Order order) {
         Order newOrder = new Order();
+        newOrder.setTotalPrice(order.getTotalPrice());
         newOrder.getOrderItems()
                 .addAll(order
                         .getOrderItems()
                         .stream()
                         .map(o -> {
-                                OrderItem orderItem = orderItemService.findById(o.getId());
-                                orderItem.getProducts().add(newOrder);
-                                return orderItem;
-                            }).collect(Collectors.toList()));
+                            OrderItem orderItem = new OrderItem();
+                            orderItem.getOrder().add(newOrder);
+                            return orderItem;
+                        })
+                        .collect(Collectors.toList()));
         return orderRepository.save(order);
     }
-
     @Override
     public Order update(Order order, Long id) {
         order.setId(id);

@@ -15,14 +15,19 @@ import java.util.Set;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "total_price")
     private double totalPrice;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems;
 
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    public void orderItem(OrderItem orderItem){
+        orderItem.setOrder(this);
+        this.orderItems.add(orderItem);
+    }
 
 }

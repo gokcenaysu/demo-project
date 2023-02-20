@@ -17,7 +17,7 @@ import java.util.*;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "code")
@@ -33,11 +33,19 @@ public class Product {
     @JsonIgnore
     private Collection<Category> categories = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="order_items_products",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_item_id"))
+    @ManyToMany(mappedBy = "products")
     @JsonIgnore
     private Collection<OrderItem> orderItems = new ArrayList<>();
 
+    public Collection<OrderItem> getOrderItems(){
+        return orderItems;
+    }
+
+    public void setOrderItems(Collection<OrderItem> orderItems){
+        this.orderItems = orderItems;
+    }
+
+    public void addOrderItem(OrderItem orderItem){
+        this.orderItems.add(orderItem);
+    }
 }
