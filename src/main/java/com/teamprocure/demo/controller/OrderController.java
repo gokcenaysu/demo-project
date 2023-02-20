@@ -28,13 +28,13 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public Order add(Order order){
+    public Order add(@RequestBody Order order){
         return orderService.add(order);
     }
 
-    @PutMapping("/update/{orderId}")
-    public Order update(@PathVariable Long orderId, @RequestBody Order order) {
-        return orderService.update(order, orderId);
+    @PutMapping("/update/{id}")
+    public Order update(@PathVariable Long id, @RequestBody Order order) {
+        return orderService.update(order, id);
     }
 
     @DeleteMapping("/delete")

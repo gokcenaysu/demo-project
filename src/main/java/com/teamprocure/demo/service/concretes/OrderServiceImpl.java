@@ -21,10 +21,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private OrderItemService orderItemService;
 
     @Override
     public List<Order> findAll() {
@@ -40,17 +36,7 @@ public class OrderServiceImpl implements OrderService {
     public Order add(Order order) {
         Order newOrder = new Order();
         newOrder.setTotalPrice(order.getTotalPrice());
-        newOrder.getOrderItems()
-                .addAll(order
-                        .getOrderItems()
-                        .stream()
-                        .map(o -> {
-                            OrderItem orderItem = new OrderItem();
-                            orderItem.getOrder().add(newOrder);
-                            return orderItem;
-                        })
-                        .collect(Collectors.toList()));
-        return orderRepository.save(order);
+        return orderRepository.save(newOrder);
     }
     @Override
     public Order update(Order order, Long id) {

@@ -2,14 +2,18 @@ package com.teamprocure.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="orders")
 public class Order {
@@ -21,13 +25,7 @@ public class Order {
     @Column(name = "total_price")
     private double totalPrice;
 
-
     @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems = new ArrayList<>();
-
-    public void orderItem(OrderItem orderItem){
-        orderItem.setOrder(this);
-        this.orderItems.add(orderItem);
-    }
+    private List<OrderItem> orderItems;
 
 }

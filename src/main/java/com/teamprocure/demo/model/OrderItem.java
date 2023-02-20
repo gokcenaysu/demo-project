@@ -28,9 +28,8 @@ public class OrderItem {
     @Column(name = "price")
     private double price;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
