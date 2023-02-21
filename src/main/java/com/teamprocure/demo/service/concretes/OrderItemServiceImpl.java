@@ -5,7 +5,6 @@ import com.teamprocure.demo.model.OrderItem;
 import com.teamprocure.demo.model.Product;
 import com.teamprocure.demo.repository.OrderItemRepository;
 import com.teamprocure.demo.repository.OrderRepository;
-import com.teamprocure.demo.repository.ProductRepository;
 import com.teamprocure.demo.service.abstracts.OrderItemService;
 import com.teamprocure.demo.service.abstracts.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +44,8 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .getProducts()
                 .stream()
                 .map(p -> {
-                            Product product = productService.findById(p.getId());
-                            product.addOrderItem(newOrderItem);
-                            return product;
+                            p.addOrderItem(newOrderItem);
+                            return p;
                 })
                 .collect(Collectors.toList()));
         return orderItemRepository.save(newOrderItem);

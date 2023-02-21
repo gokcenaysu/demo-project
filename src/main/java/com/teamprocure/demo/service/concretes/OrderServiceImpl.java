@@ -36,9 +36,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order add(Order order) {
-    //    Order newOrder = new Order();
-    //    newOrder.setTotalPrice(order.getTotalPrice());
-     //   return orderRepository.save(newOrder);
+        order.setOrderItems(order.getOrderItems().stream()
+                .map(orderItem -> {
+                    orderItem.setOrder(order);
+                    orderItem.getProducts();
+                    return orderItem;
+                }).collect(Collectors.toList()));
         return orderRepository.save(order);
     }
     @Override
