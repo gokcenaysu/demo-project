@@ -25,7 +25,12 @@ public class Order {
     @Column(name = "total_price")
     private double totalPrice;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<OrderItem> orderItems;
+
+    public void addItem(OrderItem item){
+        orderItems.add(item);
+        item.setOrder(this);
+    }
 
 }
