@@ -2,6 +2,7 @@ package com.teamprocure.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,11 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Field cannot be empty")
     @Column(name="quantity")
     private Long quantity;
 
+    @NotNull(message = "Field cannot be empty")
     @Column(name = "unitPrice")
     private double unitPrice;
 
@@ -33,6 +36,7 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @NotNull(message = "Field cannot be empty")
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name="order_items_products",
             joinColumns = @JoinColumn(name = "order_item_id"),

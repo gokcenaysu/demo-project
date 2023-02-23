@@ -7,6 +7,8 @@ import com.teamprocure.demo.service.abstracts.OrderService;
 import com.teamprocure.demo.service.concretes.OrderServiceImpl;
 import com.teamprocure.demo.service.concretes.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,23 +21,23 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("/findAll")
-    public List<Order> findAll(){
-        return orderService.findAll();
+    public ResponseEntity<List<Order>> findAll(){
+        return new ResponseEntity<>(orderService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/findByCode")
-    public Order findById(@RequestParam Long orderId){
-        return orderService.findById(orderId);
+    public ResponseEntity<Order> findById(@RequestParam Long orderId){
+        return new ResponseEntity(orderService.findById(orderId), HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public Order add(@RequestBody Order order){
-        return orderService.add(order);
+    public ResponseEntity<Order> add(@RequestBody Order order){
+        return new ResponseEntity<>(orderService.add(order), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    public Order update(@PathVariable Long id, @RequestBody Order order) {
-        return orderService.update(order, id);
+    public ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order order) {
+        return new ResponseEntity<>(orderService.update(order, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")

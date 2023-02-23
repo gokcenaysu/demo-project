@@ -13,4 +13,5 @@ public interface OrderService {
      Order add(Order order);
      Order update(Order order, Long id);
      void deleteOrder(Long id);
+     void calculateTotalPrice(Order order);
 }

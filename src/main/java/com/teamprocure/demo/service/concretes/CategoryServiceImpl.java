@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         Optional<Category> byId = categoryRepository.findById(id);
         Category update = byId.get();
-        if(category.getName().isEmpty())
+        if(!(category.getName()==null))
             update.setName(category.getName());
         if(!(category.getCode()==null))
             update.setCode(category.getCode());

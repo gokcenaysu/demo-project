@@ -47,8 +47,8 @@ public class OrderServiceImpl implements OrderService {
                     o.getProducts();
                     return o;
                 }).collect(Collectors.toList()));
-        order.getOrderItems().forEach(orderItem -> orderItem.setPrice(orderItem.getUnitPrice()*orderItem.getQuantity()));
-        order.setTotalPrice(order.getOrderItems().stream().mapToDouble(OrderItem::getPrice).sum());
+        orderItemService.calculatePrice(order);
+        calculateTotalPrice(order);
         return orderRepository.save(order);
     }
     @Override
@@ -59,8 +59,8 @@ public class OrderServiceImpl implements OrderService {
                     o.getProducts();
                     return o;
                 }).collect(Collectors.toList()));
-        order.getOrderItems().forEach(orderItem -> orderItem.setPrice(orderItem.getUnitPrice()*orderItem.getQuantity()));
-        order.setTotalPrice(order.getOrderItems().stream().mapToDouble(OrderItem::getPrice).sum());
+        orderItemService.calculatePrice(order);
+        calculateTotalPrice(order);
 
         Optional<Order> byId = orderRepository.findById(id);
         Optional<OrderItem> findById = orderItemRepository.findById(id);
@@ -79,5 +79,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    @Override
+    public void calculateTotalPrice(Order order) {
+        order.setTotalPrice(order.getOrderItems().stream().mapToDouble(OrderItem::getPrice).sum());
     }
 }

@@ -3,7 +3,10 @@ package com.teamprocure.demo.controller;
 import com.teamprocure.demo.model.Category;
 import com.teamprocure.demo.service.abstracts.CategoryService;
 import com.teamprocure.demo.service.concretes.CategoryServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,28 +23,28 @@ public class CategoryController {
     }
 
     @GetMapping("/findAll")
-    public List<Category> findAll() {
-        return categoryService.findAll();
+    public ResponseEntity<List<Category>> findAll() {
+        return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/findByCode")
-    public Category findByCode(@RequestParam Long code) {
-        return categoryService.findByCode(code);
+    public ResponseEntity<Category> findByCode(@RequestParam Long code) {
+        return new ResponseEntity<>(categoryService.findByCode(code), HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public Category add(@RequestBody Category category) {
-        return categoryService.add(category);
+    public ResponseEntity<Category> add(@RequestBody @Valid Category category) {
+        return new ResponseEntity<>(categoryService.add(category), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    public Category update(@PathVariable Long id, @RequestBody Category category) {
-        return categoryService.update(category, id);
+    public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody Category category) {
+        return new ResponseEntity<>(categoryService.update(category, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
     public void deleteCategory(@RequestParam Long id) {
-        categoryService.deleteCategory(id);
+         categoryService.deleteCategory(id);
     }
 
     @DeleteMapping("/delete-product/{id}")

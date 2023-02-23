@@ -37,13 +37,17 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product update(Product product, Long id) {
+    public Product update(Product product, Long id){
+
         Optional<Product> byId = productRepository.findById(id);
+        if(!byId.isPresent())
+            return null;
+
         Product update = byId.get();
-       if(!(product.getCode()==null)){
+        if(!(product.getCode()==null)){
             update.setCode(product.getCode());
        }
-        if(!product.getName().isEmpty()){
+        if(!(product.getName()==null)){
             update.setName(product.getName());
         }
         return productRepository.save(update);

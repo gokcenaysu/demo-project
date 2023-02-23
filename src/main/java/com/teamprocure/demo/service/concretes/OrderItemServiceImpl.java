@@ -26,6 +26,11 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItemRepository.deleteById(id);
     }
 
-
+    @Override
+    public void calculatePrice(Order order) {
+        order.getOrderItems().forEach(orderItem -> orderItem.setPrice(orderItem.getUnitPrice()*orderItem.getQuantity()));
     }
+
+
+}
 

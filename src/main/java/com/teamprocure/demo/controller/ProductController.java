@@ -3,7 +3,10 @@ package com.teamprocure.demo.controller;
 import com.teamprocure.demo.model.Product;
 import com.teamprocure.demo.service.abstracts.ProductService;
 import com.teamprocure.demo.service.concretes.ProductServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,24 +19,24 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/findAll")
-    public List<Product> findAll(){
-        return productService.findAll();
+    public ResponseEntity<List<Product>> findAll(){
+        return new ResponseEntity(productService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/findByCode")
-    public Product findByCode(@RequestParam Long code){
-        return productService.findByCode(code);
+    public ResponseEntity<Product> findByCode(@RequestParam Long code){
+        return new ResponseEntity<>(productService.findByCode(code), HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public Product add(@RequestBody Product product){
-        return productService.add(product);
+    public ResponseEntity<Product> add(@RequestBody @Valid Product product){
+        return new ResponseEntity<>(productService.add(product), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    public Product update(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product product) {
         product.setId(id);
-        return productService.update(product, id);
+        return new ResponseEntity<>(productService.update(product, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
