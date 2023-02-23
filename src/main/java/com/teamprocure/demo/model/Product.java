@@ -33,7 +33,7 @@ public class Product {
     @JsonIgnore
     private Collection<Category> categories = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(cascade = CascadeType.REMOVE, mappedBy = "products")
     @JsonIgnore
     private Collection<OrderItem> orderItems = new ArrayList<>();
 

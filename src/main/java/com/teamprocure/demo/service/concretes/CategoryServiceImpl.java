@@ -38,6 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Category add(Category category) {
         Category newCategory = new Category();
         newCategory.setName(category.getName());
+        newCategory.setCode(category.getCode());
         newCategory.getProducts()
                 .addAll(category
                 .getProducts()
@@ -64,6 +65,14 @@ public class CategoryServiceImpl implements CategoryService {
                     return product;
                 }).collect(Collectors.toList())
                 .addAll(newCategory.getProducts());
+
+        Optional<Category> byId = categoryRepository.findById(id);
+        Category update = byId.get();
+        if(category.getName().isEmpty())
+            update.setName(category.getName());
+        if(!(category.getCode()==null))
+            update.setCode(category.getCode());
+
         return categoryRepository.save(newCategory);
     }
 

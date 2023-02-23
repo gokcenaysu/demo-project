@@ -1,6 +1,7 @@
 package com.teamprocure.demo.controller;
 
 import com.teamprocure.demo.model.Order;
+import com.teamprocure.demo.model.OrderItem;
 import com.teamprocure.demo.model.Product;
 import com.teamprocure.demo.service.abstracts.OrderService;
 import com.teamprocure.demo.service.concretes.OrderServiceImpl;

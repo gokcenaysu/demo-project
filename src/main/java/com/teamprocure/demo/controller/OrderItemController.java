@@ -15,13 +15,9 @@ public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
-    @GetMapping("/findAll")
-    public List<OrderItem> findAll(){
-        return orderItemService.findAll();
-    }
 
-    @PostMapping("/add")
-    public OrderItem add(@RequestBody OrderItem orderItem){
-        return orderItemService.add(orderItem);
+    @DeleteMapping("/delete")
+    public void delete(@RequestParam Long id){
+         orderItemService.delete(id);
     }
 }

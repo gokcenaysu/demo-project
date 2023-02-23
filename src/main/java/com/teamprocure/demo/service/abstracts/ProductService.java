@@ -6,10 +6,10 @@ import com.teamprocure.demo.model.Product;
 import java.util.List;
 
 public interface ProductService {
-    public List<Product> findAll();
-    public Product findById(Long id);
-    public Product findByCode(Long code);
-    public Product add(Product product);
-    public Product update(Product product);
-    public void delete(Long id);
+    List<Product> findAll();
+    Product findById(Long id);
+    Product findByCode(Long code);
+    Product add(Product product);
+    Product update(Product product, Long id);
+    void delete(Long id);
 }
