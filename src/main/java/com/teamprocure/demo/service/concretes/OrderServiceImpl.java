@@ -63,17 +63,14 @@ public class OrderServiceImpl implements OrderService {
         calculateTotalPrice(order);
 
         Optional<Order> byId = orderRepository.findById(id);
-        Optional<OrderItem> findById = orderItemRepository.findById(id);
+
         Order update = byId.get();
-        OrderItem updated = findById.get();
-
-        OrderItem orderItem = orderItemRepository.getReferenceById(id);
-        if(order.getOrderItems().isEmpty())
+        if(order.getOrderItems()!=null)
             update.setOrderItems(order.getOrderItems());
-        if(orderItem.getProducts().isEmpty())
-            updated.setProducts(orderItem.getProducts());
 
-        return orderRepository.save(order);    }
+        return orderRepository.save(order);
+
+    }
 
 
     @Override

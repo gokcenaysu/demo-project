@@ -33,12 +33,13 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Category> add(@RequestBody @Valid Category category) {
+    public ResponseEntity<Category> add(@RequestBody Category category) {
         return new ResponseEntity<>(categoryService.add(category), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Category> update(@PathVariable Long id, @RequestBody Category category) {
+        category.setId(id);
         return new ResponseEntity<>(categoryService.update(category, id), HttpStatus.OK);
     }
 

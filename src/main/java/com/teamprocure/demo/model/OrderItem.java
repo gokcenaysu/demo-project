@@ -20,11 +20,9 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Field cannot be empty")
     @Column(name="quantity")
     private Long quantity;
 
-    @NotNull(message = "Field cannot be empty")
     @Column(name = "unitPrice")
     private double unitPrice;
 

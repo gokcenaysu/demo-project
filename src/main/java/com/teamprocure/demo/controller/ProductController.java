@@ -29,7 +29,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Product> add(@RequestBody @Valid Product product){
+    public ResponseEntity<Product> add(@RequestBody Product product){
         return new ResponseEntity<>(productService.add(product), HttpStatus.CREATED);
     }
 

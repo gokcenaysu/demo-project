@@ -21,11 +21,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Field cannot be empty")
     @Column(name = "code")
     private Long code;
 
-    @NotNull(message = "Field cannot be empty")
     @Column(name="name")
     private String name;
 

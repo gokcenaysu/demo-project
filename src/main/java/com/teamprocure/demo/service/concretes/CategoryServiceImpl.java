@@ -66,13 +66,6 @@ public class CategoryServiceImpl implements CategoryService {
                 }).collect(Collectors.toList())
                 .addAll(newCategory.getProducts());
 
-        Optional<Category> byId = categoryRepository.findById(id);
-        Category update = byId.get();
-        if(!(category.getName()==null))
-            update.setName(category.getName());
-        if(!(category.getCode()==null))
-            update.setCode(category.getCode());
-
         return categoryRepository.save(newCategory);
     }
 
