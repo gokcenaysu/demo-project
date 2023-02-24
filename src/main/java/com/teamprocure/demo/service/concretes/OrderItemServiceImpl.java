@@ -1,5 +1,6 @@
 package com.teamprocure.demo.service.concretes;
 
+import com.teamprocure.demo.model.Category;
 import com.teamprocure.demo.model.Order;
 import com.teamprocure.demo.model.OrderItem;
 import com.teamprocure.demo.model.Product;
@@ -29,6 +30,19 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public void calculatePrice(Order order) {
         order.getOrderItems().forEach(orderItem -> orderItem.setPrice(orderItem.getUnitPrice()*orderItem.getQuantity()));
+    }
+
+    @Override
+    public OrderItem update(OrderItem orderItem, Long id) {
+        OrderItem newOrderItem = orderItemRepository.getReferenceById(id);
+
+        if (orderItem.getQuantity()!=null)
+            newOrderItem.setQuantity(orderItem.getQuantity());
+        if (orderItem.getUnitPrice() != 0)
+            newOrderItem.setUnitPrice(orderItem.getUnitPrice());
+
+        return orderItemRepository.save(orderItem);
+
     }
 
 

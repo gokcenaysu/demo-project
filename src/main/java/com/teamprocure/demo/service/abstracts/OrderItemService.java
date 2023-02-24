@@ -8,5 +8,6 @@ import java.util.List;
 public interface OrderItemService {
     void delete(Long id);
     void calculatePrice(Order order);
+    OrderItem update (OrderItem orderItem, Long id);
 
 }

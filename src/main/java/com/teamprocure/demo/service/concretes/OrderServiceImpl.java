@@ -53,6 +53,7 @@ public class OrderServiceImpl implements OrderService {
     }
     @Override
     public Order update(Order order, Long id) {
+
         order.setOrderItems(order.getOrderItems().stream()
                 .map(o -> {
                     o.setOrder(order);
@@ -61,12 +62,6 @@ public class OrderServiceImpl implements OrderService {
                 }).collect(Collectors.toList()));
         orderItemService.calculatePrice(order);
         calculateTotalPrice(order);
-
-        Optional<Order> byId = orderRepository.findById(id);
-
-        Order update = byId.get();
-        if(order.getOrderItems()!=null)
-            update.setOrderItems(order.getOrderItems());
 
         return orderRepository.save(order);
 

@@ -54,8 +54,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category update(Category category, Long id) {
         Category newCategory = categoryRepository.getReferenceById(id);
-        newCategory.setName(category.getName());
-        newCategory.setCode(category.getCode());
+        if(category.getCode()!=null)
+            newCategory.setCode(category.getCode());
+        if(category.getName()!=null)
+            newCategory.setName(category.getName());
         category
                 .getProducts()
                 .stream()
