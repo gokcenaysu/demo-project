@@ -24,10 +24,10 @@ public class OrderItem {
     private Long quantity;
 
     @Column(name = "unitPrice")
-    private double unitPrice;
+    private Double unitPrice;
 
     @Column(name = "price")
-    private double price;
+    private Double price;
 
     @JsonIgnore
     @ManyToOne

@@ -23,7 +23,7 @@ public class Order {
     private Long id;
 
     @Column(name = "total_price")
-    private double totalPrice;
+    private Double totalPrice;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
